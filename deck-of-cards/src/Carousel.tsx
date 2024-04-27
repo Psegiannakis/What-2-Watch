@@ -1,4 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
+import "./animate.css";
 
 export default function Carousel1() {
   const deckUrl =
@@ -23,7 +24,7 @@ export default function Carousel1() {
     return <div>There was an error fetching the data!</div>;
 
   if (deckQuery.isLoading || cardsQuery.isLoading)
-    return <div>DATA IS LOADING.....</div>;
+    return <div className=" h-screen bg-slate-700">DATA IS LOADING.....</div>;
 
   function newCard() {
     cardsQuery.refetch();
@@ -35,15 +36,19 @@ export default function Carousel1() {
     cardsQuery.data.cards.length > 0;
 
   return (
-    <div className="flex flex-col items-center justify-center bg-slate-700">
-      <div className="p-10">
+    <div className=" h-screen flex flex-col items-center justify-center bg-slate-700">
+      <div className={`card-container p-10 ${{ newCard } ? "spin" : ""}`}>
         {checkCards ? (
-          <img src={`${cardsQuery.data.cards[0].image}`} alt="pulled card" />
+          <img
+            className="main-card"
+            src={`${cardsQuery.data.cards[0].image}`}
+            alt="pulled card"
+          />
         ) : (
           <h1>out of cards!</h1>
         )}
       </div>
-      <button onClick={newCard} className="bg-slate-500 p-3 rounded">
+      <button onClick={newCard} className="font-bold bg-slate-500 p-3 rounded">
         NEW CARD
       </button>
     </div>
