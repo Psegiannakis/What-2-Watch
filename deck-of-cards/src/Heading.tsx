@@ -28,7 +28,7 @@ export default function Heading() {
   return (
     <>
       <div className=" h-14 bg-slate-900 flex justify-between">
-        <h1 className="bold text-white font-mono p-5 ">Deck of Cards</h1>
+        <h1 className="bold text-white font-mono p-5 ">THE BUS</h1>
         <span
           onClick={reShuffle}
           className="bold text-white font-mono p-5  hover:cursor-pointer hover:animate-pulse hover: "
