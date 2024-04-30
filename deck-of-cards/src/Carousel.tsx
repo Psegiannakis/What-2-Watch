@@ -1,5 +1,5 @@
+import { useState, useEffect } from "react";
 import { useQuery } from "@tanstack/react-query";
-import "./animate.css";
 
 export default function Carousel1() {
   const deckUrl =
@@ -20,24 +20,45 @@ export default function Carousel1() {
     },
   });
 
-  if (deckQuery.error || cardsQuery.error)
-    return <div>There was an error fetching the data!</div>;
+  function reShuffle() {
+    deckQuery.refetch();
+    cardsQuery.refetch();
+  }
 
-  if (deckQuery.isLoading || cardsQuery.isLoading)
-    return <div className=" h-screen bg-slate-700">DATA IS LOADING.....</div>;
+  const [hasNewCard, setHasNewCard] = useState(false);
 
   function newCard() {
     cardsQuery.refetch();
+    setHasNewCard(true);
   }
+
+  useEffect(() => {
+    if (hasNewCard) {
+      const timer = setTimeout(() => {
+        setHasNewCard(false);
+      }, 1000);
+      return () => clearTimeout(timer);
+    }
+  }, [hasNewCard]);
 
   const checkCards =
     cardsQuery.data &&
     cardsQuery.data.cards &&
     cardsQuery.data.cards.length > 0;
 
+  if (deckQuery.isLoading || cardsQuery.isLoading)
+    return <div className=" h-screen bg-slate-700">DATA IS LOADING.....</div>;
+
+  if (deckQuery.error || cardsQuery.error)
+    return <div>There was an error fetching the data!</div>;
+
   return (
     <div className=" h-screen flex flex-col items-center justify-center bg-slate-700">
-      <div className={`card-container p-10 ${{ newCard } ? "spin" : ""}`}>
+      <div
+        className={`card-container p-10 ${
+          hasNewCard ? "animate-spin-turn" : ""
+        }`}
+      >
         {checkCards ? (
           <img
             className="main-card"
@@ -45,10 +66,18 @@ export default function Carousel1() {
             alt="pulled card"
           />
         ) : (
-          <h1>out of cards!</h1>
+          <button
+            onClick={reShuffle}
+            className="font-bold text-black p-10 cursor-pointer pointer-events-auto "
+          >
+            OUT OF CARDS!
+          </button>
         )}
       </div>
-      <button onClick={newCard} className="font-bold bg-slate-500 p-3 rounded">
+      <button
+        onClick={newCard}
+        className="font-bold bg-slate-500 p-3 rounded hover:bg-cyan-900 text-white"
+      >
         NEW CARD
       </button>
     </div>
