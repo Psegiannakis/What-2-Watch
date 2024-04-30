@@ -77,9 +77,9 @@ export default function Carousel1() {
     return <div>There was an error fetching the data!</div>;
 
   return (
-    <div className=" min-h-screen flex flex-col items-center justify-center bg-slate-700">
+    <div className=" min-h-screen pt-20 flex flex-col items-center  bg-slate-700">
       <div
-        className={`card-container p-10 ${
+        className={`card-container p-8 ${
           hasNewCard ? "animate-spin-turn" : ""
         }`}
       >

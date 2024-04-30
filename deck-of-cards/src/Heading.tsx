@@ -31,7 +31,7 @@ export default function Heading() {
         <h1 className="bold text-white font-mono p-5 ">THE BUS</h1>
         <span
           onClick={reShuffle}
-          className="bold text-white font-mono p-5  hover:cursor-pointer hover:animate-pulse hover: "
+          className="bold text-white font-mono p-5  hover:cursor-pointer hover:animate-pulse hover:bg-cyan-900 "
         >
           Shuffle
         </span>
